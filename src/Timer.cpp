@@ -1,13 +1,7 @@
 #include "Particle.h"
+#include "Timer.h"
 
-class Timer {
-   public:
-    uint32_t duration;
-    uint32_t startTime;
-    int numRuns;
-    bool* timing;
-
-    Timer(uint32_t duration, bool* timing)
+    Timer::Timer(uint32_t duration, bool* timing)
         : duration(duration), startTime(millis()), numRuns(0), timing(timing) {
         // prepended * is the dereference operator: basically what gets us
         // the *actual value* at the pointer and lets us update it
@@ -16,15 +10,15 @@ class Timer {
         *timing = false;
     }
 
-    void start() {
+    void Timer::start() {
         *timing = true;
         startTime = millis();
     }
 
 
-    void act() {
+    void Timer::act() {
         uint32_t currTime = millis();
-        if (timing) {
+        if (*timing) {
             if (currTime - startTime > duration) {
                 stop();
             }
@@ -33,8 +27,7 @@ class Timer {
 
 
 
-    void stop() {
+    void Timer::stop() {
         numRuns++;
         *timing = false;
     }
-};

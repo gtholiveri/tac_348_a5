@@ -1,18 +1,12 @@
-#include <functional>
+#include "ButtonActor.h"
 
+#include <functional>
 #include "Particle.h"
 
-class ButtonActor {
-    bool rising;
-    int pin;
-    int32_t lastPoll;
-    std::function<void()> callback;
-
-   public:
-    ButtonActor(boolean rising, int pin, std::function<void()> callback)
+    ButtonActor::ButtonActor(boolean rising, int pin, std::function<void()> callback)
         : rising(rising), pin(pin), lastPoll(digitalRead(pin)), callback(callback) {}
 
-    void act() {
+    void ButtonActor::act() {
         int32_t currPoll = digitalRead(pin);
         if (rising) {
             if (lastPoll == HIGH && currPoll == LOW) {
@@ -26,4 +20,3 @@ class ButtonActor {
 
         lastPoll = currPoll;
     }
-};

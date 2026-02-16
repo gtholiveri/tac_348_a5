@@ -1,21 +1,10 @@
+#include "LEDBlinker.h"
+
 #include <map>
 #include "IntervalActor.h"
 
-class LEDBlinker {
-   public:
-    int blueLEDPin;
-    int redLEDPin;
 
-    IntervalActor firstOnActor;
-    IntervalActor secondOnActor;
-    IntervalActor offActor;
-
-    // these come from the central orchestrator class
-    // they *must* be pointers so that the values always update across
-    bool* redTimerState;
-    bool* blueTimerState;
-
-    LEDBlinker(int blueLEDPin, int redLEDPin, bool* redTimerState, bool* blueTimerState, uint32_t onDuration, uint32_t offDuration) :
+    LEDBlinker::LEDBlinker(int blueLEDPin, int redLEDPin, bool* redTimerState, bool* blueTimerState, uint32_t onDuration, uint32_t offDuration) :
         firstOnActor(onDuration + offDuration, 0, [blueLEDPin, redLEDPin, redTimerState, blueTimerState]() {
             if (redTimerState && !blueTimerState) {
                 digitalWrite(redLEDPin, HIGH);
@@ -58,9 +47,8 @@ class LEDBlinker {
             }
         }) {}
 
-    void act() {
+    void LEDBlinker::act() {
         firstOnActor.act();
         secondOnActor.act();
         offActor.act();
     }
-};

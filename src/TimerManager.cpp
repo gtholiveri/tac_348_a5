@@ -1,31 +1,11 @@
 #include "Particle.h"
 
+#include "TimerManager.h"
+
 #include "ButtonActor.h"
 #include "LEDBlinker.h"
 #include "RGBLED.h"
 #include "Timer.h"
-
-class TimerManager {
-  public:
-  int redLEDPin;
-  int blueLEDPin;
-  int redButtonPin;
-  int blueButtonPin;
-
-  bool* redTimerState;
-  bool* blueTimerState;
-
-  Timer redTimer;
-  Timer blueTimer;
-
-  ButtonActor redButtonActor;
-  ButtonActor blueButtonActor;
-
-  LEDBlinker timerStatusBlinker;
-
-  IntervalActor publisher;
-
-  RGBLED rgbled;
 
   // also general note about the verbose pointer dereferencing:
   // I did this on purpose even though I know there's a shorthand (->) just
@@ -34,7 +14,7 @@ class TimerManager {
 
   // the "new" keyword allocates the actual bool value on the stack and then
   // returns us the *pointer* to it, which is exactly what we want here
-  TimerManager(int redLEDPin, int greenLEDPin, int blueLEDPin, int redButtonPin, int blueButtonPin, uint32_t statusBlinkOnDur, uint32_t statusBlinkOffDur) :
+  TimerManager::TimerManager(int redLEDPin, int greenLEDPin, int blueLEDPin, int redButtonPin, int blueButtonPin, uint32_t statusBlinkOnDur, uint32_t statusBlinkOffDur) :
         blueLEDPin(blueLEDPin),
         redLEDPin(redLEDPin),
         redButtonPin(redButtonPin),
@@ -44,7 +24,7 @@ class TimerManager {
         redTimer(7000, redTimerState),
         blueTimer(11000, blueTimerState),
         redButtonActor(false, redButtonPin, [this]() {
-            if ((*this).redTimerState) {
+            if (*(this->redTimerState)) {
                 (*this).redTimer.stop();
                 (*this).endFlashSequence((*this).redLEDPin);
             } else {
@@ -53,10 +33,10 @@ class TimerManager {
         }),
         blueButtonActor(false, blueButtonPin, [this]() {
             if ((*this).blueTimerState) {
-                (*this).redTimer.stop();
+                (*this).blueTimer.stop();
                 (*this).endFlashSequence((*this).blueLEDPin);
             } else {
-                (*this).redTimer.start();
+                (*this).blueTimer.start();
             }
         }),
         timerStatusBlinker(blueLEDPin, redLEDPin, redTimerState, blueTimerState, statusBlinkOnDur, statusBlinkOffDur),
@@ -66,7 +46,7 @@ class TimerManager {
         }),
         rgbled(redLEDPin, greenLEDPin, blueLEDPin, COMMON_CATHODE) {}
 
-  void endFlashSequence(int pin) {
+  void TimerManager::endFlashSequence(int pin) {
     digitalWrite(redLEDPin, LOW);
     digitalWrite(blueLEDPin, LOW);  // just to be safe from edge cases
 
@@ -93,11 +73,11 @@ class TimerManager {
     digitalWrite(pin, LOW);
   }
 
-  void act() {
+  void TimerManager::act() {
     redButtonActor.act();
     blueButtonActor.act();
     redTimer.act();
     blueTimer.act();
     timerStatusBlinker.act();
+    publisher.act();
   }
-};
