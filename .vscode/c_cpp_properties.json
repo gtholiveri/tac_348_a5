@@ -1,0 +1,37 @@
+{
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/lib/*/src",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/user/inc",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/wiring/inc",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/hal/inc",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/hal/shared",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/hal/src/rtl872x",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/hal/src/rtl872x/lwip",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/hal/src/tron",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/hal/network/lwip",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/hal/network/lwip/posix",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/hal/network/api",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/third_party/ambd_sdk/ambd_sdk/component/common/network/lwip/lwip_v2.0.2/src/include",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/dynalib/inc",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/system/inc",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/services/inc",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/communication/inc",
+        "C:/Users/gabeo/.particle/toolchains/deviceOS/6.3.4/platform/MCU/rtl872x/inc"
+      ],
+      "defines": [
+        "PARTICLE",
+        "PLATFORM_ID=32",
+        "PLATFORM_NAME=p2"
+      ],
+      "compilerPath": "C:/Users/gabeo/.particle/toolchains/gcc-arm/10.2.1/bin/arm-none-eabi-gcc.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++14",
+      "intelliSenseMode": "gcc-arm"
+    }
+  ],
+  "version": 4
+}
