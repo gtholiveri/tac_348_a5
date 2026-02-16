@@ -20,17 +20,21 @@ TimerManager::TimerManager(int redLEDPin, int greenLEDPin, int blueLEDPin, int r
       blueButtonPin(blueButtonPin),
       redTimerState(new bool(false)),
       blueTimerState(new bool(false)),
-      redTimer(7000, redTimerState),
-      blueTimer(11000, blueTimerState),
+      redTimer(7000, redTimerState, [this]() {
+        (*this).endFlashSequence((*this).redLEDPin);
+        // derefence this, call the flash sequence on (dereference this, get the led pin)
+      }),
+      blueTimer(11000, blueTimerState, [this]() {
+        (*this).endFlashSequence((*this).blueLEDPin);
+      }),
       redButtonActor(false, redButtonPin,
                      [this]() {
                        if (*(*this).redTimerState) {
-                        // this is a pointer so we dereference it first inside parentheses
-                        // redTimerState is also a pointer so we need to dereference that too
-                        // otherwise we are checking if it's not null rather than
-                        // whether the bool is true / false
+                         // this is a pointer so we dereference it first inside parentheses
+                         // redTimerState is also a pointer so we need to dereference that too
+                         // otherwise we are checking if it's not null rather than
+                         // whether the bool is true / false
                          (*this).redTimer.stop();
-                         (*this).endFlashSequence((*this).redLEDPin);
                        } else {
                          (*this).redTimer.start();
                        }
@@ -39,7 +43,6 @@ TimerManager::TimerManager(int redLEDPin, int greenLEDPin, int blueLEDPin, int r
                       [this]() {
                         if (*(*this).blueTimerState) {
                           (*this).blueTimer.stop();
-                          (*this).endFlashSequence((*this).blueLEDPin);
                         } else {
                           (*this).blueTimer.start();
                         }
