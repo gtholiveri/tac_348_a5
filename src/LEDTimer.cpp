@@ -1,8 +1,6 @@
-#include "Timer.h"
-#include <functional>
-#include "Particle.h"
+#include "LEDTimer.h"
 
-Timer::Timer(uint32_t duration, bool* timing, std::function<void()> onEnd) : duration(duration), startTime(millis()), numRuns(0), timing(timing), onEnd(onEnd) {
+LEDTimer::LEDTimer(uint32_t duration, bool* timing, std::function<void()> onEnd) : duration(duration), startTime(millis()), numRuns(0), timing(timing), onEnd(onEnd) {
   // prepended * is the dereference operator: basically what gets us
   // the *actual value* at the pointer and lets us update it
   // this should always be passed in starting as false but
@@ -10,12 +8,12 @@ Timer::Timer(uint32_t duration, bool* timing, std::function<void()> onEnd) : dur
   *timing = false;
 }
 
-void Timer::start() {
+void LEDTimer::start() {
   *timing = true;
   startTime = millis();
 }
 
-void Timer::act() {
+void LEDTimer::act() {
   uint32_t currTime = millis();
   if (*timing) {
     if (currTime - startTime > duration) {
@@ -24,7 +22,7 @@ void Timer::act() {
   }
 }
 
-void Timer::stop() {
+void LEDTimer::stop() {
   numRuns++;
   *timing = false;
   onEnd();

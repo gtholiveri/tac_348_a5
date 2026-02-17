@@ -1,10 +1,10 @@
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef LEDTIMER_H
+#define LEDTIMER_H
 
 #include <functional>
 #include "Particle.h"
 
-class Timer {
+class LEDTimer {
    public:
     uint32_t duration;
     uint32_t startTime;
@@ -12,7 +12,7 @@ class Timer {
     bool* timing;
     std::function<void()> onEnd;
 
-    Timer(uint32_t duration, bool* timing, std::function<void()> onEnd);
+    LEDTimer(uint32_t duration, bool* timing, std::function<void()> onEnd);
     void start();
     void act();
     void stop();

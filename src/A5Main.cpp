@@ -14,7 +14,7 @@ const int LED_G = MOSI;
 const int LED_B = MISO;
 
 
-TimerManager manager(LED_R, LED_G, LED_B, BUTTON_R, BUTTON_B, 200, 800);
+TimerManager manager(LED_R, LED_G, LED_B, BUTTON_R, BUTTON_B, 800, 200);
 
 void setup() {
     Serial.begin(9600);

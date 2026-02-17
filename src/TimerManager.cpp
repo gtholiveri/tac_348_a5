@@ -1,11 +1,5 @@
 #include "TimerManager.h"
 
-#include "ButtonActor.h"
-#include "LEDBlinker.h"
-#include "Particle.h"
-#include "RGBLED.h"
-#include "Timer.h"
-
 // also general note about the verbose pointer dereferencing:
 // I did this on purpose even though I know there's a shorthand (->) just
 // so I learn exactly what's actually happening (find the actual value at
@@ -18,17 +12,18 @@ TimerManager::TimerManager(int redLEDPin, int greenLEDPin, int blueLEDPin, int r
       redLEDPin(redLEDPin),
       redButtonPin(redButtonPin),
       blueButtonPin(blueButtonPin),
+      greenLEDPin(greenLEDPin),
       redTimerState(new bool(false)),
       blueTimerState(new bool(false)),
-      redTimer(7000, redTimerState, [this]() {
-        (*this).endFlashSequence((*this).redLEDPin);
-        // derefence this, call the flash sequence on (dereference this, get the led pin)
-      }),
-      blueTimer(11000, blueTimerState, [this]() {
-        (*this).endFlashSequence((*this).blueLEDPin);
-      }),
+      redTimer(7000, redTimerState,
+               [this]() {
+                 (*this).endFlashSequence((*this).redLEDPin);
+                 // derefence this, call the flash sequence on (dereference this, get the led pin)
+               }),
+      blueTimer(11000, blueTimerState, [this]() { (*this).endFlashSequence((*this).blueLEDPin); }),
       redButtonActor(false, redButtonPin,
                      [this]() {
+                        Serial.println("RED BUTTON PRESSED");
                        if (*(*this).redTimerState) {
                          // this is a pointer so we dereference it first inside parentheses
                          // redTimerState is also a pointer so we need to dereference that too
@@ -64,16 +59,22 @@ void TimerManager::endFlashSequence(int pin) {
   delay(100);
 
   // random (pretty color wheel)
-  digitalWrite(pin, LOW);
-  rgbled.writeColorWheel(3);  // this does the delaying for us in this case
+  // digitalWrite(pin, LOW);
+  // rgbled.writeColorWheel(1);  // this does the delaying for us in this case
+  digitalWrite(greenLEDPin, HIGH);
+  delay(100);
+  digitalWrite(greenLEDPin, LOW);
 
   // color
   digitalWrite(pin, HIGH);
   delay(100);
 
   // random
-  digitalWrite(pin, LOW);
-  rgbled.writeColorWheel(3);
+  // digitalWrite(pin, LOW);
+  // rgbled.writeColorWheel(1);
+  digitalWrite(greenLEDPin, HIGH);
+  delay(100);
+  digitalWrite(greenLEDPin, LOW);
 
   // color
   digitalWrite(pin, HIGH);

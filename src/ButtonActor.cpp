@@ -1,8 +1,5 @@
 #include "ButtonActor.h"
 
-#include <functional>
-
-#include "Particle.h"
 
 ButtonActor::ButtonActor(boolean rising, int pin, std::function<void()> callback) : rising(rising), pin(pin), lastPoll(digitalRead(pin)), callback(callback) {}
 

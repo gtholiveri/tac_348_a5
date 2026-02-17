@@ -6,7 +6,7 @@
 #include "LEDBlinker.h"
 #include "Particle.h"
 #include "RGBLED.h"
-#include "Timer.h"
+#include "LEDTimer.h"
 
 class TimerManager {
    public:
@@ -15,11 +15,13 @@ class TimerManager {
     int redButtonPin;
     int blueButtonPin;
 
+    int greenLEDPin;
+
     bool* redTimerState;
     bool* blueTimerState;
 
-    Timer redTimer;
-    Timer blueTimer;
+    LEDTimer redTimer;
+    LEDTimer blueTimer;
 
     ButtonActor redButtonActor;
     ButtonActor blueButtonActor;
