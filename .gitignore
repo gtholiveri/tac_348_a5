@@ -1,0 +1,4 @@
+bin/*
+CLI_notes.md
+.editorconfig
+.clang-format
