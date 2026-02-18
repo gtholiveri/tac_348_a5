@@ -4,7 +4,7 @@
 SYSTEM_MODE(AUTOMATIC);
 SYSTEM_THREAD(ENABLED);
 
-SerialLogHandler logHandler(LOG_LEVEL_INFO);
+SerialLogHandler logHandler(LOG_LEVEL_WARN);
 
 // const int PIN = <pin>;
 const int BUTTON_R = D2;
@@ -14,7 +14,7 @@ const int LED_G = MOSI;
 const int LED_B = MISO;
 
 
-TimerManager manager(LED_R, LED_G, LED_B, BUTTON_R, BUTTON_B, 800, 200);
+TimerManager manager(LED_R, LED_G, LED_B, BUTTON_R, BUTTON_B, 200, 800);
 
 void setup() {
     Serial.begin(9600);

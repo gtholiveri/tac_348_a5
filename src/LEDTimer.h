@@ -10,11 +10,12 @@ class LEDTimer {
     uint32_t startTime;
     int numRuns;
     bool* timing;
-    std::function<void()> onEnd;
+    std::function<void()> onFinish;
 
     LEDTimer(uint32_t duration, bool* timing, std::function<void()> onEnd);
     void start();
     void act();
+    void finish();
     void stop();
 };
 
